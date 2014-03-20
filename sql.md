@@ -12,9 +12,9 @@ Tipps! Dersom man batch loader store mengder data, bør også statistikken regen
 
 Indekser kan dramatisk øke ytelsen på en database spørring. Generelt kan man si at indekser brukes i forbindelse med følgende typer spørringer:
 
-1. likhet (f.eks. where id = 5)
+1. likhet (f.eks. _where id = 5_)
 2. ubegrenset utvalg (f.eks. _where id < 10_, eller _where id <> 20_)
-3. begrenset utvalg (f.eks. _where id between 10 and 20)
+3. begrenset utvalg (f.eks. _where id between 10 and 20_)
 
 #### Selektivitet
 
