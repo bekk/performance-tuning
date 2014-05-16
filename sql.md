@@ -18,11 +18,27 @@ Indekser kan dramatisk øke ytelsen på en database spørring. Generelt kan man 
 
 #### Selektivitet
 
+Selektivitet er den estimerte andelen av et resultatsett verdi som tilfredsstiller et eller flere predikater (enklere sagt: fordelingen av verdier i en kolonne), og er avgjørende for om en indeks benyttes i forbindelse med en spørring.
+
+Generelt kan man si at jo lavere selecktivitet, desto større er effekten av å benytte en indeks. 
+Optimizeren bruker selektivitet (basert på statistikk) for å avgjøre om den skal benytte seg av en indeks i en gitt spørring, så om du har gjort store endringer som påvirker selektivitet, kan det være aktuelt å regenerere statistikk. 
+
 #### Datatype mismatch
 
-#### Null values
+I forbindelse med spørringer mot indekserte kolonner, er det vikitg at datatypen i spørringen er lik med datatypen på indeksen. Selv om du får kjørt spørringen med implisitt datatype-konvertering (f.eks. fra int til string), vil ikke indeksen bli brukt.
+
+#### NULL values
+
+I eldre versjoner av Oracle (før 11g) var det ikke mulig å indeksere NULL-verdier. Det gjorde at det ville bli kjørt en full-table-scan.
+
+For å komme rundt dette, kan man lage en funksjons-basert indeks som bruker den innebygde NULL-verdi SQL-funksjonen for indeksere felter med NULL-verdi.
+
+Se flere detaljer her: http://www.dba-oracle.com/oracle_tips_null_idx.htm
 
 #### Function-based indexes
+
+En funksjonsbasert indeks beregner verdien av et uttrykk som involverer én eller flere kolonner og legger dem i indeksen.
+...
 
 #### Composite index
 
