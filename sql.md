@@ -38,7 +38,27 @@ Se flere detaljer her: http://www.dba-oracle.com/oracle_tips_null_idx.htm
 #### Function-based indexes
 
 En funksjonsbasert indeks beregner verdien av et uttrykk som involverer én eller flere kolonner og legger dem i indeksen.
-...
+
+La oss si at man i kolonne har lagret epostadresser med varierende casing. Hvis du har en spørring som skal hente ut raden uavhengig av casingen som er brukt, vil du typisk bruke _lower_ for å få case-insensitivitet:
+
+    select * from person where lower(email) = 'joe@example.com'
+
+Her vil en ordinær indeks på email-kolonnen ikke kunne bli brukt, fordi lower er brukt i spørringen.
+
+Dersom man i stedet etablerer følgende function-based index på kolonnen, vil indeksen kunne brukes: 
+
+    create index func_lower_email_index on person(lower(email));
 
 #### Composite index
+
+I mange tilfeller trenger man å kjøre spørringer med predikater på flere kolonner samtidig, f.eks.:
+
+    select * from person where first_name = 'John' and last_name = 'Doe';
+
+Dersom man etablerer en composite index på følgende vis 
+
+    create index index_names on person(first_name, last_name); 
+
+vil man kunne oppnå bedre ytelse fordi man trolig har bedre selektivitet og redusert io. Typisk vil optimizeren velge en _skip scan_ strategi i dette tilfellet.
+Man bør reflektere rundt hvilken av kolonnene som gir best selektivitet og ha den først i indeksen.      
 
