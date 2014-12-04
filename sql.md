@@ -62,3 +62,25 @@ Dersom man etablerer en composite index på følgende vis
 vil man kunne oppnå bedre ytelse fordi man trolig har bedre selektivitet og redusert io. Typisk vil optimizeren velge en _skip scan_ strategi i dette tilfellet.
 Man bør reflektere rundt hvilken av kolonnene som gir best selektivitet og ha den først i indeksen.      
 
+#### Tracing av SQL i database
+
+Hvis man har en spørring som ikke yter som forventet, går det an å trace i Oracle databasen hva som foregår.
+For å få til det, må man
+
+  - skru på tracing i databasen (gjøres typisk av dba)
+  - skru på tracing i bruker-sesjonen (gjøres i klienten/koden)
+  - kjøre spørring (gjøres i klienten/koden)
+  - Oracle genererer trace fil på server
+  - skru av tracing i bruker-sesjonen (gjøres i klienten/koden)
+  - analysere trace fil (gjøres typisk av dba)
+
+For å skru på tracing i bruker-sesjonen, må man kjøre følgende stored procedure før man kjører spørringen  
+
+    begin dbms_application_info.set_action('SOME_ACTION'); end;
+
+For å skru av tracing, kjører du følgende stored procedure 
+
+    begin dbms_application_info.set_action(NULL); end;
+
+DBA kan da aktivere tracing for *'SOME_ACTION'*, slik at det bare genereres trace filer for relevante spørringer.
+Aktivering av tracing på slike utvalgte spørringer er for øvrig relativt billig fra et ytelsesperspektiv for databasen samlet sett.
