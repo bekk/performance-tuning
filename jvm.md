@@ -1,8 +1,15 @@
 # JVM tuning, debugging og profiling tipps
 
+
+
+
 ## Thread dump
 
 # Memory dump
+
+##  Se live hvordan klassehistogrammet set ut. 
+
+    jmap -histo:live 23158 | head -n 40
 
 # JVM tuning
 
