@@ -1,6 +1,19 @@
 # JVM tuning, debugging og profiling tipps
 
+jps - JVM process status tool
 
+jstack - thread dump
+jmap - memory map
+jhat - Java Heap Analysis Tool
+
+jstat - Java Virtual Machine statistics monitoring tool
+jcmd
+jinfo
+
+
+jmc - Java Mission Control
+jconsole
+jvisualvm
 
 
 ## Thread dump
